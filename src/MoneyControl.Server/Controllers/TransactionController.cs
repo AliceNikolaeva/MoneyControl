@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MoneyControl.Application.CSV;
 using MoneyControl.Shared.Models;
@@ -11,6 +12,7 @@ using MoneyControl.Shared.Queries.Transaction.UpdateTransaction;
 namespace MoneyControl.Server.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("[controller]")]
 public class TransactionController : ControllerBase
 {
