@@ -4,6 +4,15 @@
         <Router AppAssembly="@typeof(App).Assembly">
             <Found Context="routeData">
                 <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                    <Authorizing>
+                        <div id="loadingOverlay" class="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+                             style="background: #fff; z-index: 1050;">
+                            <!-- Card -->
+                            <div class="card p-3 shadow text-center" style="background-color: white; z-index: 1060; min-width: 200px; border-radius: 0.75rem;">
+                                <h5 class="mb-0 fw-normal text-secondary" style="font-size: 1rem;">Authorizing...</h5>
+                            </div>
+                        </div>
+                    </Authorizing>
                     <NotAuthorized>
                         <RedirectToLogin/>
                     </NotAuthorized>
