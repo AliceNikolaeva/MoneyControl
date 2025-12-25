@@ -6,6 +6,7 @@
 @using MoneyControl.Shared.Models
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime
+@attribute [Authorize]
 
 <HeaderComponent HeaderText="Transactions"
                  AddButtonText="Add Transaction"

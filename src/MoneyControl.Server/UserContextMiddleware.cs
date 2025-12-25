@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using MoneyControl.Application;
 
 namespace MoneyControl.Server;
@@ -13,7 +14,14 @@ public class UserContextMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
-        UserContext.SetUserContext(new Guid("560DCD61-E75C-4671-AB88-AC0057C3252B"));
+        var userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrWhiteSpace(userId))
+        {
+            await _next.Invoke(context);
+            return;
+        }
+        
+        UserContext.SetUserContext(new Guid(userId));
         await _next.Invoke(context);
     }
 }

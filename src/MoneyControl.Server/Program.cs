@@ -75,12 +75,12 @@ public class Program
         app.UseBlazorFrameworkFiles();
         app.UseStaticFiles();
 
-        app.UseMiddleware<UserContextMiddleware>();
         app.UseMiddleware<ValidationExceptionMiddleware>();
         app.UseRouting();
         app.UseCors("AllowAll");
 
         app.UseAuthentication();
+        app.UseMiddleware<UserContextMiddleware>();
         app.UseAuthorization();
         app.MapRazorPages();
         app.MapControllers();
@@ -93,7 +93,7 @@ public class Program
                 { "redirect_uri", builder.Configuration.GetValue<string>("MoneyControl:OIDC:RedirectUrl")! },
                 { "post_logout_redirect_uri", builder.Configuration.GetValue<string>("MoneyControl:OIDC:PostLogoutRedirectUri")! },
                 { "response_type", "code" },
-                { "scope", "openid profile email parameters"}
+                { "scope", "openid profile email moneycontrolapi"}
             };
 
             return Results.Ok(parameters);
