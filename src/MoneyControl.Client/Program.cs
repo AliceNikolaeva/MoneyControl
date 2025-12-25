@@ -9,9 +9,9 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddBlazoredModal();
-builder.Services.AddOidcAuthentication(options =>
+builder.Services.AddApiAuthorization(options =>
 {
-    builder.Configuration.Bind("Local", options.ProviderOptions);
+    options.ProviderOptions.ConfigurationEndpoint = "_oidconfiguration";
     options.UserOptions.RoleClaim = "role";
 });
 

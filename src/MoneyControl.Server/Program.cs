@@ -41,7 +41,7 @@ public class Program
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
-                options.Authority = "https://localhost:5003/";
+                options.Authority = builder.Configuration["Common:ServerUrls:IdentityServerUrl"];
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     RequireExpirationTime = true,
@@ -84,6 +84,20 @@ public class Program
         app.UseAuthorization();
         app.MapRazorPages();
         app.MapControllers();
+        app.MapGet("/_oidconfiguration", () =>
+        {
+            var parameters = new Dictionary<string, string>
+            {
+                { "authority", builder.Configuration.GetValue<string>("Common:ServerUrls:IdentityServerUrl")! },
+                { "client_id", builder.Configuration.GetValue<string>("MoneyControl:OIDC:ClientId")! },
+                { "redirect_uri", builder.Configuration.GetValue<string>("MoneyControl:OIDC:RedirectUrl")! },
+                { "post_logout_redirect_uri", builder.Configuration.GetValue<string>("MoneyControl:OIDC:PostLogoutRedirectUri")! },
+                { "response_type", "code" },
+                { "scope", "openid profile email parameters"}
+            };
+
+            return Results.Ok(parameters);
+        });
         app.MapFallbackToFile("index.html");
 
         app.Run();

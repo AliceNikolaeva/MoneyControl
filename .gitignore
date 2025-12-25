@@ -342,3 +342,5 @@ healthchecksdb
 # Mac OS
 .DS_Store
 .vscode
+
+src/MoneyControl.Server/appsettings.Development.json
