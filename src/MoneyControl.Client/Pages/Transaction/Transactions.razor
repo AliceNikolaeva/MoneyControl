@@ -1,5 +1,7 @@
 @page "/"
 @using System.Globalization
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using MoneyControl.Client.Pages.Transaction.Models
 @using MoneyControl.Shared.Models
 @inject HttpClient Http
@@ -67,11 +69,18 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var accounts = await Http.GetFromJsonAsync<List<AccountModel>>("account");
-        _accounts.Clear();
-        _accounts.AddRange(accounts!);
-        _selectedAccounts = _accounts.Select(x => x.Id).ToList();
-        await Search(0);
+        try
+        {
+            var accounts = await Http.GetFromJsonAsync<List<AccountModel>>("account");
+            _accounts.Clear();
+            _accounts.AddRange(accounts!);
+            _selectedAccounts = _accounts.Select(x => x.Id).ToList();
+            await Search(0);
+        }
+        catch(AccessTokenNotAvailableException e)
+        {
+            e.Redirect();
+        }
     }
 
     private async Task ExportToCsvAsync()

@@ -1,6 +1,8 @@
 @inject HttpClient Http
 @page "/Accounts"
+@using Microsoft.AspNetCore.Authorization
 @using MoneyControl.Shared.Models
+@attribute [Authorize]
 
 <HeaderComponent HeaderText="Accounts"
                  AddButtonText="Add Account"

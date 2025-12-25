@@ -10,7 +10,7 @@ using MoneyControl.Shared.Queries.Account.UpdateAccount;
 namespace MoneyControl.Server.Controllers;
 
 [ApiController]
-[Authorize]
+[Authorize("ApiScope")]
 [Route("[controller]")]
 public class AccountController : ControllerBase
 {

@@ -12,7 +12,7 @@ using MoneyControl.Shared.Queries.Transaction.UpdateTransaction;
 namespace MoneyControl.Server.Controllers;
 
 [ApiController]
-[Authorize]
+[Authorize("ApiScope")]
 [Route("[controller]")]
 public class TransactionController : ControllerBase
 {
